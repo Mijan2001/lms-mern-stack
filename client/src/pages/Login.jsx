@@ -15,12 +15,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FcGoogle } from 'react-icons/fc';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import GoogleLoginAndLogout from '../utils/GoogleLogin';
+import { toast } from 'sonner';
 import {
     useLoginUserMutation,
     useRegisterUserMutation
 } from '../features/api/authApi';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -74,13 +77,27 @@ const Login = () => {
 
     const handleRegistration = async type => {
         const inputData = type === 'signup' ? signupInput : loginInput;
-        console.log('inputData ==', inputData);
 
-        const action = type === 'signup' ? registerUser : loginUser;
+        let action = type === 'signup' ? registerUser : loginUser;
+
         await action(inputData);
     };
 
-    useEffect(() => {}, [
+    useEffect(() => {
+        if (registerIsSuccess && registerData) {
+            toast.success(registerData.message || 'Registration successful');
+        }
+        if (registerError) {
+            toast.error(registerError.message || 'Registration failed');
+        }
+        if (loginIsSuccess && loginData) {
+            toast.success(loginData.message || 'Login successful');
+            navigate('/');
+        }
+        if (loginError) {
+            toast.error(loginError.message || 'Login failed');
+        }
+    }, [
         registerData,
         registerError,
         registerIsLoading,
@@ -124,6 +141,7 @@ const Login = () => {
                                     name="name"
                                     placeholder="Enter your name"
                                     required
+                                    className="ring-1 ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -137,6 +155,7 @@ const Login = () => {
                                     name="email"
                                     placeholder="Enter your email"
                                     required
+                                    className="ring-1 ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1 relative">
@@ -150,6 +169,7 @@ const Login = () => {
                                     name="password"
                                     placeholder="Enter your password"
                                     required
+                                    className="ring-1 ring-gray-300"
                                 />
                                 <span
                                     className="absolute right-3 top-7 cursor-pointer text-gray-500"
@@ -204,6 +224,7 @@ const Login = () => {
                                     name="email"
                                     placeholder="Enter your email"
                                     required
+                                    className="ring-1 ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1 relative">
@@ -217,6 +238,7 @@ const Login = () => {
                                     name="password"
                                     placeholder="Enter your password"
                                     required
+                                    className="ring-1 ring-gray-300"
                                 />
                                 <span
                                     className="absolute right-3 top-7 cursor-pointer text-gray-500"

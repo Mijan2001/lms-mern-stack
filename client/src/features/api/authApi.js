@@ -14,10 +14,7 @@ export const authApi = createApi({
             query: inputData => ({
                 url: 'register',
                 method: 'POST',
-                body: inputData,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: inputData
             })
         }),
         loginUser: builder.mutation({
