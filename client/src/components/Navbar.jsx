@@ -1,6 +1,6 @@
 import { AlignJustify, School } from 'lucide-react';
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -39,14 +39,17 @@ const Navbar = () => {
     const [user, setUser] = useState(true);
 
     return (
-        <nav className=" py-4 dark:bg-[#0A0A0A] bg-white border-b dark:border-gray-800 absolute w-full z-10">
+        <nav className=" py-4 dark:bg-[#0A0A0A] bg-white border-b dark:border-gray-800 w-full ">
             {/* desktop========= */}
             <div className="max-w-7xl mx-auto hidden md:flex items-center justify-between gap-4 px-16 ">
                 <div className="flex items-center gap-2 cursor-pointer">
                     <School size={'30'} />
-                    <h1 className="hidden md:block font-extrabold text-2xl">
+                    <Link
+                        to="/"
+                        className="hidden md:block font-extrabold text-2xl"
+                    >
                         E-Learning
-                    </h1>
+                    </Link>
                 </div>
 
                 {/* user icons and dark mode icon==========  */}
@@ -69,10 +72,12 @@ const Navbar = () => {
                                 <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem>
-                                        My Learning
+                                        <Link to="my-learning">
+                                            My Learning
+                                        </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>
-                                        Edit Profile
+                                        <Link to="profile">Edit Profile</Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>Log out</DropdownMenuItem>
                                 </DropdownMenuGroup>
