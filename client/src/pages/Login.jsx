@@ -141,7 +141,7 @@ const Login = () => {
                                     name="name"
                                     placeholder="Enter your name"
                                     required
-                                    className="ring-1 ring-gray-300"
+                                    className="ring-1 text-gray-900 ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -155,7 +155,7 @@ const Login = () => {
                                     name="email"
                                     placeholder="Enter your email"
                                     required
-                                    className="ring-1 ring-gray-300"
+                                    className="ring-1 text-gray-900 ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1 relative">
@@ -169,7 +169,7 @@ const Login = () => {
                                     name="password"
                                     placeholder="Enter your password"
                                     required
-                                    className="ring-1 ring-gray-300"
+                                    className="ring-1 text-gray-900 ring-gray-300"
                                 />
                                 <span
                                     className="absolute right-3 top-7 cursor-pointer text-gray-500"
@@ -224,7 +224,7 @@ const Login = () => {
                                     name="email"
                                     placeholder="Enter your email"
                                     required
-                                    className="ring-1 ring-gray-300"
+                                    className="ring-1 text-gray-900 ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1 relative">
@@ -238,10 +238,10 @@ const Login = () => {
                                     name="password"
                                     placeholder="Enter your password"
                                     required
-                                    className="ring-1 ring-gray-300"
+                                    className="ring-1 text-gray-900 ring-gray-500"
                                 />
                                 <span
-                                    className="absolute right-3 top-7 cursor-pointer text-gray-500"
+                                    className="absolute right-3 top-7 cursor-pointer text-gray-300"
                                     onClick={togglePassword}
                                 >
                                     {showPassword ? (

@@ -1,6 +1,6 @@
 import { AlignJustify, School } from 'lucide-react';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -34,9 +34,26 @@ import {
     SheetTrigger
 } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
+import { useLogoutUserMutation } from '../features/api/authApi';
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-    const [user, setUser] = useState(true);
+    const { user } = useSelector(store => store.auth);
+    console.log('profile.jsx user === ', user?.photoUrl);
+    const navigate = useNavigate();
+    const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
+
+    const handleLogout = async () => {
+        await logoutUser();
+    };
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success(data?.message || 'Logout successful');
+            navigate('/login');
+        }
+    }, [isSuccess]);
 
     return (
         <nav className=" py-4 dark:bg-[#0A0A0A] bg-white border-b dark:border-gray-800 w-full ">
@@ -59,8 +76,12 @@ const Navbar = () => {
                             <DropdownMenuTrigger asChild>
                                 <Avatar>
                                     <AvatarImage
-                                        src="https://github.com/shadcn.png"
+                                        src={
+                                            user?.photoUrl ||
+                                            'https://github.com/shadcn.png'
+                                        }
                                         alt="@shadcn"
+                                        className="cursor-pointer"
                                     />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
@@ -79,16 +100,37 @@ const Navbar = () => {
                                     <DropdownMenuItem>
                                         <Link to="profile">Edit Profile</Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem>Log out</DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        className="cursor-pointer"
+                                        onClick={handleLogout}
+                                    >
+                                        Log out
+                                    </DropdownMenuItem>
                                 </DropdownMenuGroup>
 
-                                <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                                {user.role === 'instructor' && (
+                                    <DropdownMenuItem className="cursor-pointer">
+                                        Dashboard
+                                    </DropdownMenuItem>
+                                )}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
                         <div className="flex items-center gap-2">
-                            <Button variant="outline">Login</Button>
-                            <Button variant="primary">Sign Up</Button>
+                            <Button
+                                variant="outline"
+                                className="cursor-pointer"
+                                onClick={() => navigate('/login')}
+                            >
+                                Login
+                            </Button>
+                            {/* <Button
+                                variant="primary"
+                                className="cursor-pointer"
+                                onClick={() => navigate('/login')}
+                            >
+                                Sign Up
+                            </Button> */}
                         </div>
                     )}
                     {/* dark mode icon=========== */}

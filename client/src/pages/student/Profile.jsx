@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,9 +14,42 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import Course from './Course';
+import {
+    useLoadUserQuery,
+    useUpdateUserMutation
+} from '../../features/api/authApi';
+import { toast } from 'sonner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const Profile = () => {
+    const { data, isLoading } = useLoadUserQuery();
+    const [name, setName] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState('');
+
+    const [
+        updateUser,
+        { data: updateUserData, isLoading: updateUserLoading, error }
+    ] = useUpdateUserMutation();
+
+    if (isLoading) return <LoadingSpinner />;
+
+    const { user } = data && data?.user;
+
     const enrolledCourses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    const onChangeHandler = e => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setProfilePhoto(file);
+        }
+    };
+
+    const updateUserHandler = async e => {
+        e.preventDefault();
+
+        console.log('update profile ==', name, profilePhoto);
+    };
+
     return (
         <div className="max-w-4xl mx-auto px-4 my-24">
             <h2 className="font-bold text-2xl text-center md:text-left">
@@ -26,7 +59,10 @@ const Profile = () => {
                 <div className="flex flex-col items-center">
                     <Avatar className="w-32 h-32 md:w-32 md:h-32 mb-4">
                         <AvatarImage
-                            src="https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg"
+                            src={
+                                user?.photoUrl ||
+                                'https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg'
+                            }
                             alt="avatar"
                         />
                         <AvatarFallback>CN</AvatarFallback>
@@ -38,8 +74,7 @@ const Profile = () => {
                         <h1 className="font-semibold text-gray-900 dark:text-gray-100">
                             Name :
                             <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                                {' '}
-                                Mijanur Rahman
+                                {user?.name || 'User'}
                             </span>
                         </h1>
                     </div>
@@ -48,8 +83,7 @@ const Profile = () => {
                         <h1 className="font-semibold text-gray-900 dark:text-gray-100">
                             Email :
                             <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                                {' '}
-                                mijan.cse19@gmail.com
+                                {user?.email || 'example@gmail.com'}
                             </span>
                         </h1>
                     </div>
@@ -58,8 +92,7 @@ const Profile = () => {
                         <h1 className="font-semibold text-gray-900 dark:text-gray-100">
                             Role :
                             <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                                {' '}
-                                INSTRUCTOR
+                                {user?.role.toUpperCase() || 'Student'}
                             </span>
                         </h1>
                     </div>
@@ -75,11 +108,11 @@ const Profile = () => {
                     Courses you're enrolled in
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 py-5">
-                    {enrolledCourses.length === 0 ? (
+                    {user?.enrolledCourses.length === 0 ? (
                         <h1>You haven't enrolled yet</h1>
                     ) : (
-                        enrolledCourses?.map((course, index) => (
-                            <Course key={index} />
+                        user?.enrolledCourses?.map(course => (
+                            <Course course={course} key={course?._id} />
                         ))
                     )}
                 </div>
@@ -91,7 +124,56 @@ const Profile = () => {
 export default Profile;
 
 const DialogComponent = () => {
-    const isLoading = false;
+    const { data, isLoading, refetch } = useLoadUserQuery();
+    const [name, setName] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState('');
+
+    const [
+        updateUser,
+        {
+            data: updateUserData,
+            isLoading: updateUserLoading,
+            isError,
+            error,
+            isSuccess
+        }
+    ] = useUpdateUserMutation();
+
+    if (isLoading) return <h1>Profile Loading...</h1>;
+
+    const { user } = data;
+
+    const enrolledCourses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    const onChangeHandler = e => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setProfilePhoto(file);
+        }
+    };
+
+    const updateUserHandler = async () => {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('profilePhoto', profilePhoto);
+
+        await updateUser(formData);
+    };
+
+    useEffect(() => {
+        refetch();
+    }, []);
+
+    useEffect(() => {
+        if (isSuccess) {
+            refetch();
+            toast.success(data?.message || 'Profile updated successfully');
+        }
+        if (isError) {
+            toast.error(error?.message || 'Failed to update profile');
+        }
+    }, [error, updateUserData, isSuccess, isError]);
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -115,7 +197,8 @@ const DialogComponent = () => {
                         <Input
                             id="name"
                             type="text"
-                            value="Pedro Duarte"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
                             placeholder="Enter your name"
                             className="col-span-3"
                         />
@@ -132,13 +215,19 @@ const DialogComponent = () => {
                             id="profile-photo"
                             type="file"
                             accept="image/*"
+                            onChange={onChangeHandler}
+                            placeholder="Upload your profile photo"
                             className="col-span-3"
                         />
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="submit" disabled={isLoading}>
-                        {isLoading ? (
+                    <Button
+                        type="submit"
+                        disabled={updateUserLoading}
+                        onClick={updateUserHandler}
+                    >
+                        {updateUserLoading ? (
                             <>
                                 <Loader2 className="animate-spin" /> Please
                                 wait...

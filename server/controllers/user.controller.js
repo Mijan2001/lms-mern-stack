@@ -1,6 +1,7 @@
 import { User } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../utils/generateToken.js';
+import { deleteMediaFromCloudinary, uploadMedia } from '../utils/cloudinary.js';
 
 // signup================
 export const register = async (req, res) => {
@@ -60,7 +61,7 @@ export const login = async (req, res) => {
             });
         }
 
-        generateToken(res, user, 'Welcome back ${user.name}');
+        generateToken(res, user, `Welcome back ${user.name}`);
     } catch (error) {
         console.log('error==>', error);
         return res
@@ -89,10 +90,10 @@ export const logout = async (_, res) => {
 
 export const getUserProfile = async (req, res) => {
     try {
-        const userId = req.id;
-        const user = await User.findById(userId)
-            .select('-password')
-            .populate('enrolledCourses');
+        const userId = req?.id;
+        console.log('userId : ', userId);
+        const user = await User.findById(userId).select('-password');
+
         if (!user) {
             return res.status(404).json({
                 message: 'Profile not found',
@@ -133,8 +134,8 @@ export const updateProfile = async (req, res) => {
         }
 
         // upload new photo
-        const cloudResponse = await uploadMedia(profilePhoto.path);
-        const photoUrl = cloudResponse.secure_url;
+        const cloudResponse = await uploadMedia(profilePhoto?.path);
+        const photoUrl = cloudResponse?.secure_url;
 
         const updatedData = { name, photoUrl };
         const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {
