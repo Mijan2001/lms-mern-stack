@@ -40,7 +40,7 @@ import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth);
-    console.log('profile.jsx user === ', user?.photoUrl);
+
     const navigate = useNavigate();
     const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
 
