@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+    const searchHandler = e => {
+        e.preventDefault();
+        if (searchQuery.trim() !== '') {
+            navigate(`/course/search?query=${searchQuery}`);
+        }
+        setSearchQuery('');
+    };
     return (
         <div className="relative bg-gradient-to-r from-blue-500 to bg-indigo-600 dark:from-gray-800 dark:to-gray-900 py-24 px-4 text-center">
             <div className="max-w-3xl mx-auto">
@@ -12,11 +22,14 @@ const HeroSection = () => {
                     Discover,Learn and Upgrade your profile
                 </p>
                 <form
+                    onSubmit={searchHandler}
                     action=""
                     className="flex items-center outline-none  bg-white dark:bg-gray-800 rounded-full shadow-lg overflow-hidden max-w-xl mx-auto mb-6"
                 >
                     <input
                         type="text"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
                         placeholder="Search for courses..."
                         className="w-full px-4 py-2 focus:border-none focus:outline-none"
                     />
@@ -24,7 +37,10 @@ const HeroSection = () => {
                         Search
                     </Button>
                 </form>
-                <Button className="bg-white dark:bg-gray-800 text-blue-600 rounded-full hover:bg-gray-200 cursor-pointer">
+                <Button
+                    onClick={() => navigate(`/course/search?query`)}
+                    className="bg-white dark:bg-gray-800 text-blue-600 rounded-full hover:bg-gray-200 cursor-pointer"
+                >
                     Explore Courese
                 </Button>
             </div>

@@ -110,7 +110,9 @@ const Navbar = () => {
 
                                 {user.role === 'instructor' && (
                                     <DropdownMenuItem className="cursor-pointer">
-                                        Dashboard
+                                        <Link to="/admin/course">
+                                            Dashboard
+                                        </Link>
                                     </DropdownMenuItem>
                                 )}
                             </DropdownMenuContent>
@@ -176,7 +178,9 @@ const MobileNavbar = () => {
                 {role === 'instructor' && (
                     <SheetFooter>
                         <SheetClose asChild>
-                            <Button type="submit">Dashboard</Button>
+                            <Button type="submit">
+                                <Link to="/admin/course">Dashboard</Link>
+                            </Button>
                         </SheetClose>
                     </SheetFooter>
                 )}

@@ -157,6 +157,7 @@ export const editCourse = async (req, res) => {
 export const getCourseById = async (req, res) => {
     try {
         const { courseId } = req.params;
+        console.log('course.controller.js courseId==', courseId);
         const course = await Course.findById(courseId);
 
         if (!course) {
