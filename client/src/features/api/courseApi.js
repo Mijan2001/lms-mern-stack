@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+const VITE_API = import.meta.env.VITE_API;
 
-const COURSE_API = 'http://localhost:8080/api/v1/course';
+const COURSE_API =
+    `${VITE_API}/course` || 'http://localhost:8080/api/v1/course';
 
 export const courseApi = createApi({
     reducerPath: 'courseApi',
@@ -26,12 +28,12 @@ export const courseApi = createApi({
         }),
         getSearchCourse: builder.query({
             query: ({ searchQuery, categories, sortByPrice }) => {
-                // Build qiery string
+                // Build query string
                 let queryString = `/search?query=${encodeURIComponent(
                     searchQuery
                 )}`;
 
-                // append cateogry
+                // append cateogory
                 if (categories && categories.length > 0) {
                     const categoriesString = categories
                         .map(encodeURIComponent)

@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FcGoogle } from 'react-icons/fc';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import GoogleLoginAndLogout from '../utils/GoogleLogin';
+// import GoogleLoginAndLogout from '../utils/GoogleLogin';
 import { toast } from 'sonner';
 import {
     useLoginUserMutation,
@@ -109,7 +109,7 @@ const Login = () => {
     ]);
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+        <div className="flex justify-center items-center min-h-screen text-white p-4">
             <Tabs defaultValue="login" className="w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="signup" className="cursor-pointer">
@@ -122,7 +122,7 @@ const Login = () => {
 
                 {/* Signup Form */}
                 <TabsContent value="signup">
-                    <Card className="shadow-xl border rounded-lg bg-white">
+                    <Card className="shadow-xl border rounded-lg">
                         <CardHeader>
                             <CardTitle>Signup</CardTitle>
                             <CardDescription>
@@ -141,7 +141,7 @@ const Login = () => {
                                     name="name"
                                     placeholder="Enter your name"
                                     required
-                                    className="ring-1 text-gray-900 ring-gray-300"
+                                    className="ring-1 text-white ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -155,7 +155,7 @@ const Login = () => {
                                     name="email"
                                     placeholder="Enter your email"
                                     required
-                                    className="ring-1 text-gray-900 ring-gray-300"
+                                    className="ring-1 text-white ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1 relative">
@@ -169,7 +169,7 @@ const Login = () => {
                                     name="password"
                                     placeholder="Enter your password"
                                     required
-                                    className="ring-1 text-gray-900 ring-gray-300"
+                                    className="ring-1 text-white ring-gray-300"
                                 />
                                 <span
                                     className="absolute right-3 top-7 cursor-pointer text-gray-500"
@@ -198,14 +198,14 @@ const Login = () => {
                                     'Signup'
                                 )}
                             </Button>
-                            <GoogleLoginAndLogout />
+                            {/* <GoogleLoginAndLogout /> */}
                         </CardFooter>
                     </Card>
                 </TabsContent>
 
                 {/* Login Form */}
                 <TabsContent value="login">
-                    <Card className="shadow-xl border rounded-lg bg-white">
+                    <Card className="shadow-xl border rounded-lg ">
                         <CardHeader>
                             <CardTitle>Login</CardTitle>
                             <CardDescription>
@@ -224,7 +224,7 @@ const Login = () => {
                                     name="email"
                                     placeholder="Enter your email"
                                     required
-                                    className="ring-1 text-gray-900 ring-gray-300"
+                                    className="ring-1 text-white ring-gray-300"
                                 />
                             </div>
                             <div className="space-y-1 relative">
@@ -238,7 +238,7 @@ const Login = () => {
                                     name="password"
                                     placeholder="Enter your password"
                                     required
-                                    className="ring-1 text-gray-900 ring-gray-500"
+                                    className="ring-1 text-white ring-gray-500"
                                 />
                                 <span
                                     className="absolute right-3 top-7 cursor-pointer text-gray-300"
@@ -267,7 +267,7 @@ const Login = () => {
                                     'Login'
                                 )}
                             </Button>
-                            <GoogleLoginAndLogout />
+                            {/* <GoogleLoginAndLogout /> */}
                         </CardFooter>
                     </Card>
                 </TabsContent>

@@ -21,7 +21,9 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 
-const MEDIA_API = 'http://localhost:8080/api/v1/media';
+const VITE_API = import.meta.env.VITE_API;
+
+const MEDIA_API = `${VITE_API}/media` || 'http://localhost:8080/api/v1/media';
 
 const LectureTab = () => {
     const navigate = useNavigate();

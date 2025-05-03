@@ -8,7 +8,14 @@ const Courses = () => {
         useGetPublishedCourseQuery();
     console.log('Course.jsx data===', data);
 
-    if (isError) return <h1>Some error occurred while fetching courses</h1>;
+    if (isError)
+        return (
+            <div className="flex items-center justify-center h-64">
+                <h1 className="text-2xl font-semibold text-red-600">
+                    Some error occurred while fetching courses
+                </h1>
+            </div>
+        );
     return (
         <div className="bg-gray-50 dark:bg-gray-900 dark:text-white">
             <div className="max-w-7xl mx-auto p-6">
