@@ -8,7 +8,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { useTheme } from '@/components/theme-provider';
+// import { useTheme } from '@/components/theme-provider';
 const DarkMode = () => {
     return (
         <DropdownMenu className="outline-none border-none">

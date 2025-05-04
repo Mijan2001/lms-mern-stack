@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/select';
 
 import { useNavigate, useParams } from 'react-router-dom';
-// import RichTextEditor from '../../../components/RichTextEditor';
+import RichTextEditor from '../../../components/RichTextEditor';
 import { Loader2 } from 'lucide-react';
 import {
     useEditCourseMutation,
@@ -201,7 +201,7 @@ const CourseTab = () => {
 
                         {/* ei অংশটা পরে করা হবে========= */}
 
-                        {/* <RichTextEditor input={input} setInput={setInput} /> */}
+                        <RichTextEditor input={input} setInput={setInput} />
                     </div>
                     <div className="flex items-center gap-5">
                         {/* course category===================== */}
