@@ -15,7 +15,7 @@ const Dashboard = () => {
     const { data, isSuccess, isError, isLoading } =
         useGetPurchasedCoursesQuery();
 
-    if (isLoading) return <h1>Loading...</h1>;
+    if (isLoading) return <h1 className="text-center">Loading...</h1>;
     if (isError)
         return <h1 className="text-red-500">Failed to get purchased course</h1>;
 

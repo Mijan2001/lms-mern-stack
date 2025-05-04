@@ -8,8 +8,8 @@ import {
     CardDescription,
     CardFooter,
     CardTitle
-} from '@/components/ui/Card';
-import { Separator } from '@/components/ui/Separator';
+} from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import BuyCourseButton from '../../components/BuyCourseButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetCourseDetailWithStatusQuery } from '../../features/api/purchaseApi';
