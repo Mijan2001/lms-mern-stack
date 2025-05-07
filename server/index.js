@@ -20,7 +20,10 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(
     cors({
-        origin: [process.env.CLIENT_URL, 'https://lms-live.netlify.app'],
+        origin: [
+            process.env.CLIENT_URL,
+            'https://lms-mern-stack-xptx.vercel.app'
+        ],
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization']
