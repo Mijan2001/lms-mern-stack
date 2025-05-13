@@ -20,13 +20,14 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(
     cors({
-        origin: [
-            process.env.CLIENT_URL,
-            'https://lms-mern-stack-xptx.vercel.app'
-        ],
+        origin:
+            process.env.NODE_ENV === 'production'
+                ? 'https://lms-mern-stack-xptx.vercel.app'
+                : ['http://localhost:5173'],
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization']
+        allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+        exposedHeaders: ['Set-Cookie']
     })
 );
 
@@ -55,6 +56,12 @@ app.use((req, res, next) => {
 
 // Error-handling middleware===============================
 app.use((err, req, res, next) => {
+    if (err.name === 'CORSError') {
+        return res.status(403).json({
+            success: false,
+            message: 'CORS error: Not allowed to access this resource'
+        });
+    }
     res.status(err.status || 500);
     res.json({
         success: false,
