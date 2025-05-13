@@ -20,11 +20,8 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(
     cors({
-        origin:
-            process.env.NODE_ENV === 'production'
-                ? 'https://lms-mern-stack-ru3i.vercel.app/'
-                : ['http://localhost:5173'],
-        credentials: false,
+        origin: '*',
+        credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
         exposedHeaders: ['Set-Cookie']
