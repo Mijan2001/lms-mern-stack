@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(
     cors({
-        origin: '*',
+        origin: 'https://lms-mern-stack-ru3i.vercel.app',
         credentials: true
     })
 );
