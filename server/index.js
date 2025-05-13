@@ -22,7 +22,7 @@ app.use(
     cors({
         origin:
             process.env.NODE_ENV === 'production'
-                ? 'https://lms-mern-stack-ru3i.vercel.app'
+                ? 'https://lms-mern-stack-ru3i.vercel.app/'
                 : ['http://localhost:5173'],
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
