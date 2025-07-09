@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { userLoggedIn, userLoggedOut } from '../authSlice';
 const VITE_API = import.meta.env.VITE_API;
 
-const USER_API = `${VITE_API}/user/` || 'http://localhost:8080/api/v1/user/';
+const USER_API = `${VITE_API}/user/`;
 
 console.log('usser_api ==== ', USER_API);
 

@@ -38,7 +38,7 @@ const CreateLecture = () => {
         if (error) {
             toast.error(error?.data?.message || 'Failed to create lecture!');
         }
-    }, [isSuccess, error]);
+    }, [isSuccess, error, data?.message, refetch]);
     const createLectureHandler = async () => {
         await createLecture({ lectureTitle, courseId });
     };

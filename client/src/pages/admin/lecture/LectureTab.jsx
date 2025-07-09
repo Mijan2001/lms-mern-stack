@@ -23,7 +23,7 @@ import { Loader2 } from 'lucide-react';
 
 const VITE_API = import.meta.env.VITE_API;
 
-const MEDIA_API = `${VITE_API}/media` || 'http://localhost:8080/api/v1/media';
+const MEDIA_API = `${VITE_API}/media`;
 
 const LectureTab = () => {
     const navigate = useNavigate();
@@ -122,7 +122,7 @@ const LectureTab = () => {
         if (error) {
             toast.error(error?.data?.message || 'Failed to update lecture!');
         }
-    }, [isSuccess, error]);
+    }, [isSuccess, error, data?.message]);
 
     useEffect(() => {
         if (removeSuccess) {
@@ -140,7 +140,7 @@ const LectureTab = () => {
         if (removeLoading) {
             toast.error('Failed to remove lecture!');
         }
-    }, [removeSuccess]);
+    }, [removeSuccess, removeData?.message, removeLoading, navigate]);
 
     return (
         <Card>

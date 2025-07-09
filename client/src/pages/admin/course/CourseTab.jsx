@@ -134,7 +134,7 @@ const CourseTab = () => {
         if (error) {
             toast.error(error?.data?.message || 'Something went wrong!');
         }
-    }, [isSuccess, error]);
+    }, [isSuccess, error, navigate, data?.message]);
 
     if (courseByIdLoading) return <Loader2 className="animate-spin h-4 w-4" />;
 

@@ -38,7 +38,7 @@ const AddCourse = () => {
             toast.success(data?.message || 'Course created successfully!');
             navigate('/admin/course');
         }
-    }, [isSuccess, error]);
+    }, [isSuccess, error, data?.message, navigate]);
 
     return (
         <div className="flex-1 mx-10 ">

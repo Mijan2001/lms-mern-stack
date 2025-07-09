@@ -32,7 +32,19 @@ const GoogleLoginAndLogout = () => {
 
     return (
         <GoogleOAuthProvider clientId="828134576685-k67nj919jllhi2pvhj4appeqm36qe6a5.apps.googleusercontent.com">
-            {!showLoginButton ? (
+            {user ? (
+                <div className="text-center">
+                    <p className="mb-2">
+                        Logged in as: {user.name || user.email}
+                    </p>
+                    <button
+                        onClick={handleLogout}
+                        className="w-full justify-center py-1 rounded-md flex items-center gap-2 bg-red-500 text-white border cursor-pointer hover:bg-red-600"
+                    >
+                        Logout
+                    </button>
+                </div>
+            ) : !showLoginButton ? (
                 <button
                     onClick={() => setShowLoginButton(true)}
                     className="w-full justify-center py-1 rounded-md flex items-center gap-2 bg-white text-black border cursor-pointer hover:bg-gray-200"

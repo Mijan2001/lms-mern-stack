@@ -53,7 +53,7 @@ const Navbar = () => {
             toast.success(data?.message || 'Logout successful');
             navigate('/login');
         }
-    }, [isSuccess]);
+    }, [isSuccess, data?.message, navigate]);
 
     return (
         <nav className=" py-4 dark:bg-[#0A0A0A] bg-white border-b dark:border-gray-800 w-full ">
