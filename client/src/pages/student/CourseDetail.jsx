@@ -18,7 +18,7 @@ const CourseDetail = () => {
     const params = useParams();
     const courseId = params.courseId;
     const navigate = useNavigate();
-    const { data, isLoading, isSuccess, isError, error } =
+    const { data, isLoading, isError, error } =
         useGetCourseDetailWithStatusQuery(courseId);
 
     if (isLoading) {
@@ -96,7 +96,7 @@ const CourseDetail = () => {
                                     className="flex items-center gap-3  text-sm"
                                 >
                                     <span>
-                                        {true ? (
+                                        {purchased ? (
                                             <PlayCircle size={14} />
                                         ) : (
                                             <Lock size={14} />
