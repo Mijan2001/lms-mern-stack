@@ -143,12 +143,18 @@ export const getCourseDetailWithPurchaseStatus = async (req, res) => {
         const { courseId } = req.params;
         const userId = req.id;
 
+        console.log(
+            'courseId in getCourseDetailWithPurchaseStatus: ',
+            courseId
+        );
+        console.log('userId in getCourseDetailWithPurchaseStatus: ', userId);
+
         const course = await Course.findById(courseId)
             .populate({ path: 'creator' })
             .populate({ path: 'lectures' });
 
         const purchased = await CoursePurchase.findOne({ userId, courseId });
-        console.log(purchased);
+        console.log('purchased coursed === ', purchased);
 
         if (!course) {
             return res.status(404).json({ message: 'course not found!' });

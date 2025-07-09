@@ -11,7 +11,11 @@ const isAuthenticated = async (req, res, next) => {
             });
         }
 
+        console.log('token form isAuthenticated middleware: ', token);
+
         const decode = await jwt.verify(token, process.env.SECRET_KEY);
+
+        console.log('Decoded token in isAuthenticated middleware: ', decode);
 
         if (!decode) {
             return res.status(401).json({
