@@ -26,7 +26,10 @@ app.use(morgan('dev'));
 // );
 app.use(
     cors({
-        origin: 'https://lms-mern-stack-ru3i.vercel.app',
+        origin: [
+            'https://serene-sunshine-97f9e0.netlify.app',
+            'https://lms-mern-stack-ru3i.vercel.app'
+        ],
         credentials: true
     })
 );
